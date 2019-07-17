@@ -3,26 +3,31 @@
 import math
 
 def recipe_batches(recipe, ingredients):
-  set_tracker = {} # keeps track of no. complete sets of items we have
+  # will keep track of # complete sets of items
+  set_tracker = {} 
 
   for key_r in recipe:
     for key_i in ingredients:
       if key_r == key_i:
 
-        # num of sets of that recipe ingredient we have available - round to lowest int
+        # num of sets of that recipe-ingredient we have available - round to lowest int with //
         value = ingredients[key_i] // recipe[key_r]
 
         # add item: value to tracker dictionary
         set_tracker[key_i] = value 
 
-  # find minimum value in the dictionary and set that as batches
-  # min(dictionary, key=dictionary.get) returns the KEY of the item in dictionary with the lowest value
-  # so set that as the key in set_tracker[key] to return the minimum value in the dictionary
-  batches = set_tracker[min(set_tracker, key=set_tracker.get)]
+    # Handle when item in recipe isn't in ingredients
+    # Add that key to tracker dictionary with value 0
+    if ingredients.get(key_r) == None:
+      set_tracker[key_r] = 0
 
-  print("Tracker Dictionary: ", set_tracker)
-  print("Minimum Value: ", set_tracker[min(set_tracker, key=set_tracker.get)])
 
+  batches = min(set_tracker.values())
+
+
+  # print("Tracker Dictionary: ", set_tracker)
+  # print("Minimum Value: ", min(set_tracker.values()))
+  # print("Batches: ", batches)
   return batches
 
 
@@ -30,10 +35,17 @@ def recipe_batches(recipe, ingredients):
 if __name__ == '__main__':
   # Change the entries of these dictionaries to test 
   # your implementation with different inputs
-  recipe = { 'milk': 100, 'butter': 50, 'flour': 5 }
-  ingredients = { 'milk': 132, 'butter': 48, 'flour': 51 }
+  # Original (batches = 0)
+  # recipe = { 'milk': 100, 'butter': 50, 'flour': 5 }
+  # ingredients = { 'milk': 132, 'butter': 48, 'flour': 51 }
+
+  # When Multiple Sets Available (batches > 1)
   # recipe = { 'milk': 100, 'butter': 50, 'flour': 5 }
   # ingredients = { 'milk': 332, 'butter': 200, 'flour': 51 }
+
+  # When Recipe has items not listed in Ingredients
+  recipe = { 'milk': 100, 'flour': 4, 'sugar': 10, 'butter': 5 }
+  ingredients = { 'milk': 1288, 'flour': 9, 'sugar': 95 }
   print("{batches} batches can be made from the available ingredients: {ingredients}.".format(batches=recipe_batches(recipe, ingredients), ingredients=ingredients)) # using .format() instead of f-string
 
 
@@ -45,20 +57,23 @@ if __name__ == '__main__':
 - need empty batches = [] to keep track of how many recipies we can make
 - If the value of matching key of dict 2 is >= that of value of the matching key of dict 1, then batches += 1
 
-### Keeping track of how many complete sets of each recipe item are available:
+### NEW: Keeping track of how many complete sets of each recipe item are available:
 
 - create dictionary to store # of complete sets for each food item
-- complete_sets = {
+- set_tracker = {
   "item1" : 0,
   "item2" : 0,
   "item3" : 0
 }
-- num_complete_item = item in ingredients // item in recipe
-- append new key value to complete_sets dictionary
+- value = item in ingredients // item in recipe
+- append new key: value to set_tracker dictionary
   - key = name of that item
-  - value = num_complete_item
-- iterate over the values in complete_sets dictionary
-- set batches = lowest value in complete_sets dictionary
+  - value = value
+  - set_tracker[key_in_list]: value
+
+- find minimum value in the dictionary and set that to batches variable
+  - dictionary.values() returns list of all values in dictionary
+  - set batches = lowest value in set_tracker dictionary
 
 - print batches
 
