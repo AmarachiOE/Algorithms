@@ -16,6 +16,9 @@ def eating_cookies(n, cache=None):
     3: 4
   }
   
+  if n <= 1:
+    return 1
+
   if n in cache:
     return cache[n]
 
