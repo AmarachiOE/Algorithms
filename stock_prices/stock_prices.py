@@ -29,9 +29,9 @@ price_list3 = [100, 90, 80, 50, 20, 10] # -10
 price_list4 = [100, 55, 4, 98, 10, 18, 90, 95, 43, 11, 47, 67, 89, 42, 49, 79] # 94
 
 print("3530? ", find_max_profit(price_list1))
-print("6? ",find_max_profit(price_list2))
-print("-10? ",find_max_profit(price_list3))
-print("94? ",find_max_profit(price_list4))
+print("6? ", find_max_profit(price_list2))
+print("-10? ", find_max_profit(price_list3))
+print("94? ", find_max_profit(price_list4))
 
 
 
